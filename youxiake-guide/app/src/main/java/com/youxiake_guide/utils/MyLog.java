@@ -1,24 +1,28 @@
 package com.youxiake_guide.utils;
 
 import android.util.Log;
-  
-/** 
+
+import com.youxiake_guide.BuildConfig;
+
+/**
  * Log统一管理类 
  *  
  *  
  *  
  */  
-public class LogUtils
+public class MyLog
 {  
   
-    private LogUtils()
+    private MyLog()
     {  
         /* cannot be instantiated */  
         throw new UnsupportedOperationException("cannot be instantiated");  
     }  
   
-    public static boolean isDebug = true;// 是否需要打印bug，可以在application的onCreate函数里面初始化  
-    private static final String TAG = "way";  
+    public static boolean isDebug = BuildConfig.LOG_DEBUG;// 是否需要打印bug，可以在application的onCreate函数里面初始化
+
+
+    private static final String TAG = "youxiake_guide";
   
     // 下面四个是默认tag的函数  
     public static void i(String msg)  
