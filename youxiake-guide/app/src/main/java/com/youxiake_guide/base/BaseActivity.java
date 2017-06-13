@@ -1,4 +1,4 @@
-package com.youxiake_guide.ui.activity;
+package com.youxiake_guide.base;
 
 import android.app.Activity;
 import android.content.pm.PackageManager;
@@ -11,12 +11,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import com.youxiake_guide.linstener.PermissionListener;
+import com.youxiake_guide.listener.PermissionListener;
 import com.youxiake_guide.utils.ActivityUtils;
 import com.youxiake_guide.utils.MyLog;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import rx.subjects.PublishSubject;
 
 /**
  * Created by Cvmars on 2017/6/13.
@@ -28,14 +30,15 @@ public class BaseActivity extends AppCompatActivity {
 
     private static PermissionListener mPermissionListener;
 
-
     private static final int CODE_REQUEST_PERMISSION = 1;
+
+    public final PublishSubject<ActivityLifeCycleEvent> lifecycleSubject = PublishSubject.create();
 
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
         MyLog.d(TAG + "--->>> onStart :");
-
+        lifecycleSubject.onNext(ActivityLifeCycleEvent.CREATE);
         ActivityUtils.addActivity(this);
     }
 
@@ -107,30 +110,35 @@ public class BaseActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         MyLog.d(TAG + "--->>> onStart :");
+        lifecycleSubject.onNext(ActivityLifeCycleEvent.START);
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
         MyLog.d(TAG + "--->>> onRestart :");
+        lifecycleSubject.onNext(ActivityLifeCycleEvent.RESTART);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         MyLog.d(TAG + "--->>> onResume :");
+        lifecycleSubject.onNext(ActivityLifeCycleEvent.RESUME);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         MyLog.d(TAG + "--->>> onPause :");
+        lifecycleSubject.onNext(ActivityLifeCycleEvent.PAUSE);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         MyLog.d(TAG + "--->>> onStop :");
+        lifecycleSubject.onNext(ActivityLifeCycleEvent.STOP);
     }
 
 
@@ -139,6 +147,7 @@ public class BaseActivity extends AppCompatActivity {
         super.onDestroy();
         MyLog.d(TAG + "--->>> onDestroy :");
         ActivityUtils.removeActivity(this);
+        lifecycleSubject.onNext(ActivityLifeCycleEvent.DESTROY);
     }
 
     @Override
