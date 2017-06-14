@@ -9,12 +9,12 @@ public class Consts {
     /**
      * 内网访问地址
      */
-//    public final static String APP_HOST = "http://127.0.0.1/retrofit/";
+    public final static String APP_HOST = "http://192.168.22.106/";
 
 
     /**
      * 外网可访问的API地址
      */
-    public final static String APP_HOST = "http://www.youxiake.com/";
+//    public final static String APP_HOST = "http://www.youxiake.com/";
 
 }

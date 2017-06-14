@@ -1,8 +1,12 @@
 package com.youxiake_guide.api;
 
+
+import com.youxiake_guide.utils.MyLog;
+
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.CacheControl;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -10,7 +14,6 @@ import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Url;
 
 /**
  * Created by Administrator on 2017/6/13 0013.
@@ -18,11 +21,13 @@ import retrofit2.http.Url;
  */
 
 public class Api {
+
     private static ApiService SERVICE;
     /**
      * 请求超时时间
      */
     private static final int DEFAULT_TIMEOUT = 10000;
+
 
     public static ApiService getDefault() {
         if (SERVICE == null) {
@@ -42,14 +47,24 @@ public class Api {
                             .addQueryParameter("key1","value1")
                             .addQueryParameter("key2", "value2");
 
+                    // re-write response header to force use of cache
+                    // 正常访问同一请求接口（多次访问同一接口），给30秒缓存，超过时间重新发送请求，否则取缓存数据
+//                    CacheControl cacheControl = new CacheControl.Builder()
+//                            .maxAge(3, TimeUnit.SECONDS )
+//                            .build();
+
                     Request newRequest = request.newBuilder()
                             //对所有请求添加请求头
-                            .header("mobileFlag", "adfsaeefe")
-                            .addHeader("type", "4")
+                            .header("Accept", "application/vnd.yxk.v2+json")
                             .method(request.method(), request.body())
+//                            .header("Cache-Control", cacheControl.toString() )
                             .url(authorizedUrlBuilder.build())
                             .build();
 
+
+                    MyLog.d( "Request   url  : " + newRequest.method()  +" : " + newRequest.url() +"\n"
+                            +"          body : " + newRequest.body()+"\n"
+                            +"        headers: " + newRequest.headers());
 //                    okhttp3.Response originalResponse = chain.proceed(request);
 //                    return originalResponse.newBuilder().header("mobileFlag", "adfsaeefe").addHeader("type", "4").build();
                     return  chain.proceed(newRequest);

@@ -1,5 +1,7 @@
 package com.youxiake_guide.api;
 
+import com.youxiake_guide.model.HomeModel;
+
 import java.util.List;
 
 import retrofit2.http.GET;
@@ -11,12 +13,9 @@ import rx.subjects.Subject;
  * Created by Cvmars on 2017/6/13.
  */
 
-public abstract interface ApiService {
+public interface ApiService {
 
-    @GET("top250")
-    Observable<HttpResult<List<Subject>>> getTopMovie(@Query("start") int start, @Query("count") int count);
-
-    @GET("top250")
-    Observable<HttpResult<Subject>> getUser(@Query("touken") String touken);
+    @GET("api/home")
+    Observable<HttpResult<HomeModel>> getHomeInfo();
 
 }

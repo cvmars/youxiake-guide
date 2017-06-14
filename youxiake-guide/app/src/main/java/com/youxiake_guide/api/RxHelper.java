@@ -26,7 +26,8 @@ public class RxHelper {
      * @return
      */
     @NonNull
-    public <T> Observable.Transformer<T, T> bindUntilEvent(@NonNull final ActivityLifeCycleEvent event, final PublishSubject<ActivityLifeCycleEvent> lifecycleSubject) {
+    public <T> Observable.Transformer<T, T> bindUntilEvent(@NonNull final ActivityLifeCycleEvent event,
+                                                           final PublishSubject<ActivityLifeCycleEvent> lifecycleSubject) {
         return new Observable.Transformer<T, T>() {
             @Override
             public Observable<T> call(Observable<T> sourceObservable) {
@@ -61,13 +62,38 @@ public class RxHelper {
                 return tObservable.flatMap(new Func1<HttpResult<T>, Observable<T>>() {
                     @Override
                     public Observable<T> call(HttpResult<T> result) {
-                        if (result.getCount() != 0) {
+                        if (result.getCode() != 0) {
                             return createData(result.getSubjects());
                         } else {
-                            return Observable.error(new ApiException(result.getCount()));
+                            return Observable.error(new ApiException(result.getCode()));
                         }
                     }
                 }).takeUntil(compareLifecycleObservable).subscribeOn(Schedulers.io()).unsubscribeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread()).observeOn(AndroidSchedulers.mainThread());
+            }
+        };
+    }
+
+    /**
+     * @param <T>
+     * @return
+     */
+    public static <T> Observable.Transformer<HttpResult<T>, T> handleResult() {
+        return new Observable.Transformer<HttpResult<T>, T>() {
+            @Override
+            public Observable<T> call(Observable<HttpResult<T>> tObservable) {
+                return tObservable.flatMap(new Func1<HttpResult<T>, Observable<T>>() {
+                    @Override
+                    public Observable<T> call(HttpResult<T> result) {
+                        if (result.getCode() != 0) {
+                            return createData(result.getSubjects());
+                        } else {
+                            return Observable.error(new ApiException(result.getCode()));
+                        }
+                    }
+                }).subscribeOn(Schedulers.io())
+                        .unsubscribeOn(Schedulers.io())
+                        .subscribeOn(AndroidSchedulers.mainThread())
+                        .observeOn(AndroidSchedulers.mainThread());
             }
         };
     }

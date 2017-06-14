@@ -1,8 +1,10 @@
 package com.youxiake_guide.utils;
 
 import android.content.Context;
-import android.widget.Toast;  
-  
+import android.widget.Toast;
+
+import com.youxiake_guide.app.MyApp;
+
 /** 
  * Toast统一管理类 
  *  
@@ -28,8 +30,31 @@ public class ToastUtils
     {  
         if (isShow)  
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show();  
-    }  
-  
+    }
+
+
+    /**
+     * 短时间显示Toast
+     *
+     * @param message
+     */
+    public static void showShort(CharSequence message)
+    {
+        if (isShow && message!=null)
+            Toast.makeText(MyApp.getApplication(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * 短时间显示Toast
+     *
+     * @param message
+     */
+    public static void showLong(CharSequence message)
+    {
+        if (isShow && message!=null)
+            Toast.makeText(MyApp.getApplication(), message, Toast.LENGTH_LONG).show();
+    }
+
     /** 
      * 短时间显示Toast 
      *  
@@ -38,7 +63,7 @@ public class ToastUtils
      */  
     public static void showShort(Context context, int message)  
     {  
-        if (isShow)  
+        if (isShow)
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show();  
     }  
   

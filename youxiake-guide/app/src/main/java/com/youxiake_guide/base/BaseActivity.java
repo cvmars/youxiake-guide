@@ -4,11 +4,14 @@ import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.youxiake_guide.listener.PermissionListener;
@@ -18,13 +21,14 @@ import com.youxiake_guide.utils.MyLog;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.ButterKnife;
 import rx.subjects.PublishSubject;
 
 /**
  * Created by Cvmars on 2017/6/13.
  */
 
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     public final String TAG = this.getClass().getSimpleName();
 
@@ -40,6 +44,24 @@ public class BaseActivity extends AppCompatActivity {
         MyLog.d(TAG + "--->>> onStart :");
         lifecycleSubject.onNext(ActivityLifeCycleEvent.CREATE);
         ActivityUtils.addActivity(this);
+    }
+
+    @Override
+    public void setContentView(@LayoutRes int layoutResID) {
+        super.setContentView(layoutResID);
+        ButterKnife.bind(this);
+    }
+
+    @Override
+    public void setContentView(View view) {
+        super.setContentView(view);
+        ButterKnife.bind(this);
+    }
+
+    @Override
+    public void setContentView(View view, ViewGroup.LayoutParams params) {
+        super.setContentView(view,params);
+        ButterKnife.bind(this);
     }
 
     public static void requestPermissions(String[] permissions, PermissionListener listener) {
