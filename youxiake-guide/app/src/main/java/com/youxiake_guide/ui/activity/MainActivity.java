@@ -5,7 +5,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.youxiake_guide.R;
 import com.youxiake_guide.api.Api;
@@ -14,13 +16,13 @@ import com.youxiake_guide.api.HttpUtil;
 import com.youxiake_guide.api.SimpleSubscriber;
 import com.youxiake_guide.base.BaseActivity;
 import com.youxiake_guide.model.HomeModel;
+import com.youxiake_guide.ui.fragment.GuideFragment;
 import com.youxiake_guide.ui.fragment.HomeFragment;
 import com.youxiake_guide.ui.fragment.MeFragment;
 import com.youxiake_guide.ui.fragment.ShareNoteFragment;
-import com.youxiake_guide.ui.fragment.GuideFragment;
-import com.youxiake_guide.utils.SingleToast;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 
@@ -36,6 +38,22 @@ public class MainActivity extends BaseActivity {
     LinearLayout llHomeMe;
     @BindView(R.id.home_fral_content)
     FrameLayout homeFralContent;
+    @BindView(R.id.iv_home_home)
+    ImageView ivHomeHome;
+    @BindView(R.id.txt_home_home)
+    TextView txtHomeHome;
+    @BindView(R.id.iv_home_shareNote)
+    ImageView ivHomeShareNote;
+    @BindView(R.id.txt_home_shareNote)
+    TextView txtHomeShareNote;
+    @BindView(R.id.iv_home_guide)
+    ImageView ivHomeGuide;
+    @BindView(R.id.txt_home_guide)
+    TextView txtHomeGuide;
+    @BindView(R.id.iv_home_me)
+    ImageView ivHomeMe;
+    @BindView(R.id.txt_home_me)
+    TextView txtHomeMe;
 
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
@@ -48,6 +66,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         initView();
         requestData();
     }
@@ -87,10 +106,12 @@ public class MainActivity extends BaseActivity {
 
         fragmentTransaction = fragmentManager.beginTransaction();
         initDefaultFragment(fragmentTransaction);
+        initTextIcon();
         switch (view.getId()) {
 
             case R.id.ll_home_home:
-                SingleToast.showToast("home");
+                txtHomeHome.setTextColor(getResources().getColor(R.color.color_Base));
+                ivHomeHome.setImageResource(R.drawable.main_icon_chutuan_selected);
                 if (homeFragment == null) {
                     homeFragment = new HomeFragment();
                     fragmentTransaction.add(R.id.home_fral_content, homeFragment);
@@ -100,7 +121,8 @@ public class MainActivity extends BaseActivity {
 
                 break;
             case R.id.ll_home_find:
-                SingleToast.showToast("find");
+                txtHomeShareNote.setTextColor(getResources().getColor(R.color.color_Base));
+                ivHomeShareNote.setImageResource(R.drawable.main_icon_gongxiang_selected);
                 if (shareNoteFragment == null) {
                     shareNoteFragment = new ShareNoteFragment();
                     fragmentTransaction.add(R.id.home_fral_content, shareNoteFragment);
@@ -109,7 +131,8 @@ public class MainActivity extends BaseActivity {
                 }
                 break;
             case R.id.ll_home_camera:
-                SingleToast.showToast("camera");
+                txtHomeGuide.setTextColor(getResources().getColor(R.color.color_Base));
+                ivHomeGuide.setImageResource(R.drawable.main_icon_xuzhi_selected);
                 if (guideFragment == null) {
                     guideFragment = new GuideFragment();
                     fragmentTransaction.add(R.id.home_fral_content, guideFragment);
@@ -118,7 +141,8 @@ public class MainActivity extends BaseActivity {
                 }
                 break;
             case R.id.ll_home_me:
-                SingleToast.showToast("me");
+                txtHomeMe.setTextColor(getResources().getColor(R.color.color_Base));
+                ivHomeMe.setImageResource(R.drawable.main_icon_me_selected);
                 if (meFragment == null) {
                     meFragment = new MeFragment();
                     fragmentTransaction.add(R.id.home_fral_content, meFragment);
@@ -145,5 +169,17 @@ public class MainActivity extends BaseActivity {
         if (meFragment != null) {
             fm.hide(meFragment);
         }
+    }
+
+    private void initTextIcon(){
+        int normalColor = getResources().getColor(R.color.color_home_tab_normal);
+        txtHomeHome.setTextColor(normalColor);
+        txtHomeShareNote.setTextColor(normalColor);
+        txtHomeGuide.setTextColor(normalColor);
+        txtHomeMe.setTextColor(normalColor);
+        ivHomeHome.setImageResource(R.drawable.main_icon_chutuan_normal);
+        ivHomeShareNote.setImageResource(R.drawable.main_icon_gongxiang_normal);
+        ivHomeGuide.setImageResource(R.drawable.main_icon_xuzhi_normal);
+        ivHomeMe.setImageResource(R.drawable.main_icon_me_normal);
     }
 }
