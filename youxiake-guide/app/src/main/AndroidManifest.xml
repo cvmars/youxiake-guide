@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.youxiake_guide" >
+    package="com.youxiake.guide" >
 
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:name=".app.MyApp"
         android:theme="@style/BaseAppTheme" >
-        <activity android:name=".ui.activity.MainActivity" >
+        <activity android:name="com.youxiake.guide.ui.activity.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
