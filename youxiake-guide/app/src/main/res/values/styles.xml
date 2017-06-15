@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorPrimaryDark</item>
     </style>
 
     <!-- loading 样式 -->
@@ -16,6 +16,24 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@drawable/iosstyle_halftransparent_bg</item>
         <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+
+    <!-- StartActivity背景图片 进入app时为了第二屏这样设置  -->
+    <style name="Theme.Start" parent="BaseAppTheme">
+        <!--<item name="android:windowBackground">@drawable/welcome</item>-->
+        <!--<item name="android:windowNoTitle">true</item>-->
+        <!--<item name="android:windowFullscreen">true</item>-->
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <!--<item name="android:windowBackground">@android:color/transparent</item>-->
+    </style>
+
+
+    <!-- StartActivity背景图片 进入app时为了第二屏这样设置  -->
+    <style name="Theme.transition" parent="BaseAppTheme">
+        <item name="android:windowEnterAnimation">@transition/explode</item>
     </style>
 
 </resources>

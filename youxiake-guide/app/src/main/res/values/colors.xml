@@ -9,6 +9,13 @@
 
     <color name="color_Base">#43ad89</color>
 
+    <color name="color_line_ddd">#ddd</color>
+
     <color name="color_home_tab_normal">#999</color>
+
+    <color name="red">#FFC93437</color>
+    <color name="blue">#FF375BF1</color>
+    <color name="yellow">#FFF7D23E</color>
+    <color name="green">#FF34A350</color>
 
 </resources>

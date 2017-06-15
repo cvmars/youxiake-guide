@@ -63,7 +63,7 @@ public class RxHelper {
                     @Override
                     public Observable<T> call(HttpResult<T> result) {
                         if (result.getCode() != 0) {
-                            return createData(result.getSubjects());
+                            return createData(result.getData());
                         } else {
                             return Observable.error(new ApiException(result.getCode()));
                         }
@@ -85,7 +85,7 @@ public class RxHelper {
                     @Override
                     public Observable<T> call(HttpResult<T> result) {
                         if (result.getCode() != 0) {
-                            return createData(result.getSubjects());
+                            return createData(result.getData());
                         } else {
                             return Observable.error(new ApiException(result.getCode()));
                         }

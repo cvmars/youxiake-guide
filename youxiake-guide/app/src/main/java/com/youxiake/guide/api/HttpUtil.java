@@ -1,8 +1,13 @@
 package com.youxiake.guide.api;
 
+import com.youxiake.guide.model.HomeModel;
+import com.youxiake.guide.utils.MyLog;
+import com.youxiake.guide.utils.ToastUtils;
+
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -29,19 +34,47 @@ public class HttpUtil {
     }
 
 
-//    public void toSubscribe(Observable ob, final Subscriber subscriber,String cacheKey,boolean isSave, boolean forceRefresh){
-//
-//        ob.subscribeOn(Schedulers.io())               //在IO线程进行网络请求
-//                .observeOn(AndroidSchedulers.mainThread())  //回到主线程去处理请求结果
-//                .subscribe(subscriber);
-//
-//        RetrofitCache.load(cacheKey,ob,isSave,forceRefresh).subscribe(subscriber);
-//    }
+    public <T> void toSubscribe(Observable<HttpResult<T>> ob, final Subscriber subscriber){
 
-    public void toSubscribe(Observable ob, final Subscriber subscriber){
-
-        ob.subscribeOn(Schedulers.io())               //在IO线程进行网络请求
-                .observeOn(AndroidSchedulers.mainThread())  //回到主线程去处理请求结果
+        ob.flatMap(new Func1<HttpResult<T>, Observable<T>>() {
+            @Override
+            public Observable<T> call(HttpResult<T> result) {
+                MyLog.d(result.toString());
+                if (result.getCode() != 0) {
+                    return createData(result.getData());
+                } else {
+                    return Observable.error(new ApiException(result.getCode()));
+                }
+            }
+        }).subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
+
+    }
+
+
+    /**
+     * 创建成功的数据
+     *
+     * @param data
+     * @param <T>
+     * @return
+     */
+    private static <T> Observable<T> createData(final T data) {
+        return Observable.create(new Observable.OnSubscribe<T>() {
+            @Override
+            public void call(Subscriber<? super T> subscriber) {
+                try {
+                    MyLog.d("onNext"+ data);
+                    subscriber.onNext(data);
+                    subscriber.onCompleted();
+                } catch (Exception e) {
+                    subscriber.onError(e);
+                }
+            }
+        });
+
     }
 }

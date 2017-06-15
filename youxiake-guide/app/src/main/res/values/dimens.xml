@@ -3,8 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-
     <dimen name="home_title">18sp</dimen>
-    <dimen name="home_bottom_tab_text">12sp</dimen>
+    <dimen name="home_bottom_tab_text">11sp</dimen>
 
 </resources>

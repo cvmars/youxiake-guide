@@ -17,9 +17,10 @@ import com.youxiake.guide.api.SimpleSubscriber;
 import com.youxiake.guide.base.BaseActivity;
 import com.youxiake.guide.model.HomeModel;
 import com.youxiake.guide.ui.fragment.GuideFragment;
-import com.youxiake.guide.ui.fragment.HomeFragment;
+import com.youxiake.guide.ui.fragment.IndexHomeFragment;
 import com.youxiake.guide.ui.fragment.MeFragment;
 import com.youxiake.guide.ui.fragment.ShareNoteFragment;
+
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,7 +58,7 @@ public class MainActivity extends BaseActivity {
 
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
-    private HomeFragment homeFragment;
+    private IndexHomeFragment homeFragment;
     private ShareNoteFragment shareNoteFragment;
     private GuideFragment guideFragment;
     private MeFragment meFragment;
@@ -74,26 +75,25 @@ public class MainActivity extends BaseActivity {
     private void initView() {
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-        homeFragment = new HomeFragment();
+        homeFragment = new IndexHomeFragment();
         fragmentTransaction.replace(R.id.home_fral_content, homeFragment);
         fragmentTransaction.commit();
     }
 
     public void requestData() {
 
-        Observable<HttpResult<HomeModel>> homeInfo = Api.getDefault().getHomeInfo();
+        final Observable<HttpResult<HomeModel>> homeInfo = Api.getDefault().getHomeInfo();
         HttpUtil.getInstance().toSubscribe(homeInfo,
-                new SimpleSubscriber<HttpResult<HomeModel>>() {
+                new SimpleSubscriber<HomeModel>() {
 
                     @Override
-                    protected void _onNext(HttpResult<HomeModel> o) {
+                    protected void _onNext(HomeModel o) {
 
-                        showToast("model :" + o.toString());
                     }
 
                     @Override
                     protected void _onError(String message) {
-                        showToast("model :" + message);
+                        showToast("_onError :" + message);
                     }
 
                 });
@@ -113,7 +113,7 @@ public class MainActivity extends BaseActivity {
                 txtHomeHome.setTextColor(getResources().getColor(R.color.color_Base));
                 ivHomeHome.setImageResource(R.drawable.main_icon_chutuan_selected);
                 if (homeFragment == null) {
-                    homeFragment = new HomeFragment();
+                    homeFragment = new IndexHomeFragment();
                     fragmentTransaction.add(R.id.home_fral_content, homeFragment);
                 } else {
                     fragmentTransaction.show(homeFragment);

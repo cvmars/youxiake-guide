@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.youxiake.guide.R;
 import com.youxiake.guide.adapter.HomeFragmentPagerAdapter;
 import com.youxiake.guide.base.BaseFragment;
+import com.youxiake.guide.base.BaseListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ import butterknife.OnClick;
  * Created by Cvmars on 2017/6/13
  */
 
-public class HomeFragment extends BaseFragment implements ViewPager.OnPageChangeListener{
+public class IndexHomeFragment extends BaseFragment implements ViewPager.OnPageChangeListener{
 
 
     @BindView(R.id.my_toolbar)
@@ -42,7 +43,7 @@ public class HomeFragment extends BaseFragment implements ViewPager.OnPageChange
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle
             savedInstanceState) {
-        View parentView = inflater.inflate(R.layout.frg_home, null);
+        View parentView = inflater.inflate(R.layout.frg_index_home, null);
         return parentView;
     }
 
@@ -51,8 +52,8 @@ public class HomeFragment extends BaseFragment implements ViewPager.OnPageChange
         ((AppCompatActivity) getActivity()).setSupportActionBar(myToolbar);
 
         List<Fragment> fragments = new ArrayList<>();
-        fragments.add(new ShareNoteFragment());
-        fragments.add(new MeFragment());
+        fragments.add(new BaseListFragment());
+        fragments.add(new IndexNoteFragment());
         fragmentPagerAdapter = new HomeFragmentPagerAdapter(getFragmentManager(), fragments);
         viewPagerHome.setAdapter(fragmentPagerAdapter);
         viewPagerHome.setOnPageChangeListener(this);

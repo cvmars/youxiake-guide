@@ -2,7 +2,6 @@ package com.youxiake.guide.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,7 @@ import butterknife.BindView;
  * Created by Cvmars on 2017/6/13.
  */
 
-public class ShareNoteFragment extends BaseFragment {
+public class GuidehelpFragment extends BaseFragment {
 
     @BindView(R.id.list_shareNote)
     PulltoRefreshRecyclerView listShareNote;

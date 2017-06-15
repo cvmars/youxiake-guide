@@ -6,16 +6,16 @@ package com.youxiake.guide.api;
 
 public class HttpResult<T> {
 
-    private T subjects;
+    private T data;
     private int code;
     private String msg;
 
-    public T getSubjects() {
-        return subjects;
+    public T getData() {
+        return data;
     }
 
-    public void setSubjects(T subjects) {
-        this.subjects = subjects;
+    public void setData(T subjects) {
+        this.data = subjects;
     }
 
     public int getCode() {

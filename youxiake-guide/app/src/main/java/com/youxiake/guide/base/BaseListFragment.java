@@ -1,8 +1,7 @@
-package com.youxiake.guide.ui.fragment;
+package com.youxiake.guide.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,7 @@ import butterknife.BindView;
  * Created by Cvmars on 2017/6/13.
  */
 
-public class ShareNoteFragment extends BaseFragment {
+public class BaseListFragment extends BaseFragment {
 
     @BindView(R.id.list_shareNote)
     PulltoRefreshRecyclerView listShareNote;
@@ -36,13 +35,12 @@ public class ShareNoteFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle
             savedInstanceState) {
 
-        View parentView = inflater.inflate(R.layout.frg_sharenote, null);
+        View parentView = inflater.inflate(R.layout.list_pulltorefresh_base, null);
         return parentView;
     }
 
     @Override
     protected void initViewsAndEvents(View view) {
-//        listShareNote.setLayoutManager(new LinearLayoutManager(getActivity()));
         noteAdapter = new HomeNoteAdapter(R.layout.list_home_note,models);
 //        addMore();
         listShareNote.setAdapter(noteAdapter);

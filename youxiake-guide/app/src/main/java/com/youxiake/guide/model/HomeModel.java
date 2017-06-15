@@ -2,11 +2,13 @@ package com.youxiake.guide.model;
 
 import java.util.List;
 
+import javax.security.auth.Subject;
+
 /**
  * Created by Cvmars on 2017/6/14.
  */
 
-public class HomeModel {
+public class HomeModel  {
 
     /**
      * handler : search_list

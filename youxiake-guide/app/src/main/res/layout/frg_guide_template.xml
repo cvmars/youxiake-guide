@@ -6,9 +6,9 @@
               android:layout_height="match_parent">
 
 
-    <com.youxiake.guide.widget.pulltorefrash.PulltoRefreshRecyclerView
-        android:id="@+id/list_shareNote"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    <TextView android:layout_width="match_parent"
+              android:gravity="center"
+              android:text="Template"
+              android:layout_height="match_parent"/>
 
 </LinearLayout>
