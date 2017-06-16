@@ -1,5 +1,6 @@
 package com.youxiake.guide.ui.activity;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -9,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.tbruyelle.rxpermissions.Permission;
+import com.tbruyelle.rxpermissions.RxPermissions;
 import com.youxiake.guide.R;
 import com.youxiake.guide.api.Api;
 import com.youxiake.guide.api.HttpResult;
@@ -26,6 +29,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
+import rx.Scheduler;
+import rx.Subscription;
+import rx.functions.Action1;
 
 public class MainActivity extends BaseActivity {
 
