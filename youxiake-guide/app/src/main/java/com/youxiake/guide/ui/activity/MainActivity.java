@@ -1,17 +1,16 @@
 package com.youxiake.guide.ui.activity;
 
-import android.Manifest;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.tbruyelle.rxpermissions.Permission;
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.jaeger.library.StatusBarUtil;
 import com.youxiake.guide.R;
 import com.youxiake.guide.api.Api;
 import com.youxiake.guide.api.HttpResult;
@@ -22,16 +21,13 @@ import com.youxiake.guide.model.HomeModel;
 import com.youxiake.guide.ui.fragment.GuideFragment;
 import com.youxiake.guide.ui.fragment.IndexHomeFragment;
 import com.youxiake.guide.ui.fragment.MeFragment;
-import com.youxiake.guide.ui.fragment.ShareNoteFragment;
+import com.youxiake.guide.ui.fragment.MessageCenterFragment;
 
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.Observable;
-import rx.Scheduler;
-import rx.Subscription;
-import rx.functions.Action1;
+import io.reactivex.Observable;
 
 public class MainActivity extends BaseActivity {
 
@@ -65,18 +61,22 @@ public class MainActivity extends BaseActivity {
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
     private IndexHomeFragment homeFragment;
-    private ShareNoteFragment shareNoteFragment;
+    private MessageCenterFragment shareNoteFragment;
     private GuideFragment guideFragment;
     private MeFragment meFragment;
+    private long mExitTime;
+    public static final long TWO_SECOND = 2 * 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        StatusBarUtil.setTranslucentForImageViewInFragment(this, null);
         ButterKnife.bind(this);
         initView();
         requestData();
     }
+
 
     private void initView() {
         fragmentManager = getSupportFragmentManager();
@@ -94,6 +94,7 @@ public class MainActivity extends BaseActivity {
 
                     @Override
                     protected void _onNext(HomeModel o) {
+
 
                     }
 
@@ -130,7 +131,7 @@ public class MainActivity extends BaseActivity {
                 txtHomeShareNote.setTextColor(getResources().getColor(R.color.color_Base));
                 ivHomeShareNote.setImageResource(R.drawable.main_icon_gongxiang_selected);
                 if (shareNoteFragment == null) {
-                    shareNoteFragment = new ShareNoteFragment();
+                    shareNoteFragment = new MessageCenterFragment();
                     fragmentTransaction.add(R.id.home_fral_content, shareNoteFragment);
                 } else {
                     fragmentTransaction.show(shareNoteFragment);
@@ -187,5 +188,19 @@ public class MainActivity extends BaseActivity {
         ivHomeShareNote.setImageResource(R.drawable.main_icon_gongxiang_normal);
         ivHomeGuide.setImageResource(R.drawable.main_icon_xuzhi_normal);
         ivHomeMe.setImageResource(R.drawable.main_icon_me_normal);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if ((System.currentTimeMillis() - mExitTime) > TWO_SECOND) {
+                showToast("再按一次退出程序");
+                mExitTime = System.currentTimeMillis();
+            } else {
+                finish();
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

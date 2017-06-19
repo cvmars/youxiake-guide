@@ -1,15 +1,13 @@
 package com.youxiake.guide.api;
 
-import com.youxiake.guide.model.HomeModel;
 import com.youxiake.guide.utils.MyLog;
-import com.youxiake.guide.utils.ToastUtils;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
-
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 /**
  * Created by Cvmars on 2017/6/14.
  */
@@ -34,11 +32,11 @@ public class HttpUtil {
     }
 
 
-    public <T> void toSubscribe(Observable<HttpResult<T>> ob, final Subscriber subscriber){
+    public <T> void toSubscribe(Observable<HttpResult<T>> ob, final SimpleSubscriber subscriber){
 
-        ob.flatMap(new Func1<HttpResult<T>, Observable<T>>() {
+        ob.flatMap(new Function<HttpResult<T>, Observable<T>>() {
             @Override
-            public Observable<T> call(HttpResult<T> result) {
+            public Observable<T> apply(HttpResult<T> result) throws Exception {
                 MyLog.d(result.toString());
                 if (result.getCode() != 0) {
                     return createData(result.getData());
@@ -63,13 +61,14 @@ public class HttpUtil {
      * @return
      */
     private static <T> Observable<T> createData(final T data) {
-        return Observable.create(new Observable.OnSubscribe<T>() {
+
+        return Observable.create(new ObservableOnSubscribe() {
             @Override
-            public void call(Subscriber<? super T> subscriber) {
+            public void subscribe(ObservableEmitter subscriber) throws Exception {
                 try {
                     MyLog.d("onNext"+ data);
                     subscriber.onNext(data);
-                    subscriber.onCompleted();
+                    subscriber.onComplete();
                 } catch (Exception e) {
                     subscriber.onError(e);
                 }

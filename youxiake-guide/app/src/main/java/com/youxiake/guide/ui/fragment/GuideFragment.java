@@ -1,6 +1,7 @@
 package com.youxiake.guide.ui.fragment;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,23 +11,28 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.youxiake.guide.R;
 import com.youxiake.guide.adapter.HomeFragmentPagerAdapter;
 import com.youxiake.guide.base.BaseFragment;
+import com.youxiake.guide.base.BaseListFragment;
+import com.youxiake.guide.utils.ScreenUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * Created by Cvmars on 2017/6/13.
  */
 
-public class GuideFragment extends BaseFragment implements ViewPager.OnPageChangeListener{
+public class GuideFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
 
 
     @BindView(R.id.mys_toolbar)
@@ -40,22 +46,29 @@ public class GuideFragment extends BaseFragment implements ViewPager.OnPageChang
     TextView txtHomeGuide;
 
     HomeFragmentPagerAdapter fragmentPagerAdapter;
+    @BindView(R.id.fake_statusbar_view)
+    View fakeStatusbarView;
+    Unbinder unbinder;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle
             savedInstanceState) {
 
-        View parentView = inflater.inflate(R.layout.frg_guide,null);
+        View parentView = inflater.inflate(R.layout.frg_guide, null);
+        unbinder = ButterKnife.bind(this, parentView);
         return parentView;
     }
 
     @Override
     protected void initViewsAndEvents(View view) {
         ((AppCompatActivity) getActivity()).setSupportActionBar(myToolbar);
-
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) fakeStatusbarView.getLayoutParams();
+            layoutParams.height = ScreenUtils.getStatusHeight(getActivity());
+        }
         List<Fragment> fragments = new ArrayList<>();
-        fragments.add(new GuidehelpFragment());
+        fragments.add(new BaseListFragment());
         fragments.add(new GuideTemplateFragment());
         fragmentPagerAdapter = new HomeFragmentPagerAdapter(getFragmentManager(), fragments);
         viewPagerHome.setAdapter(fragmentPagerAdapter);
@@ -82,9 +95,9 @@ public class GuideFragment extends BaseFragment implements ViewPager.OnPageChang
     @Override
     public void onPageSelected(int position) {
         initText();
-        if(position == 0){
+        if (position == 0) {
             txtHomeNote.setTextColor(getResources().getColor(R.color.colorAccent));
-        }else{
+        } else {
             txtHomeGuide.setTextColor(getResources().getColor(R.color.colorAccent));
         }
     }
@@ -94,8 +107,14 @@ public class GuideFragment extends BaseFragment implements ViewPager.OnPageChang
 
     }
 
-    private void initText(){
+    private void initText() {
         txtHomeNote.setTextColor(Color.WHITE);
         txtHomeGuide.setTextColor(Color.WHITE);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

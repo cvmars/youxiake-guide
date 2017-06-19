@@ -20,7 +20,7 @@
         <TextView
             android:id="@+id/txt_home_home"
             android:layout_width="wrap_content"
-            android:text="出团资料"
+            android:text="首页"
             android:textSize="@dimen/home_bottom_tab_text"
             android:textColor="@color/color_Base"
             android:layout_height="wrap_content"/>
@@ -41,7 +41,7 @@
         <TextView
             android:id="@+id/txt_home_shareNote"
             android:layout_width="wrap_content"
-            android:text="共享日记"
+            android:text="消息"
             android:textColor="@color/color_home_tab_normal"
             android:textSize="@dimen/home_bottom_tab_text"
             android:layout_height="wrap_content"/>
@@ -63,7 +63,7 @@
         <TextView
             android:id="@+id/txt_home_guide"
             android:layout_width="wrap_content"
-            android:text="葵花宝典"
+            android:text="工具"
             android:textSize="@dimen/home_bottom_tab_text"
             android:textColor="@color/color_home_tab_normal"
             android:layout_height="wrap_content"/>

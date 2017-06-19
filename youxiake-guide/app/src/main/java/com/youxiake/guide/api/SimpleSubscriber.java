@@ -1,28 +1,25 @@
 package com.youxiake.guide.api;
 
+import android.support.annotation.NonNull;
+
+import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
 import com.youxiake.guide.utils.MyLog;
 
-import retrofit2.adapter.rxjava.HttpException;
-import rx.Subscriber;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.Observer;
 
 /**
  * Created by Cvmars on 2017/6/14.
  */
 
-public abstract class SimpleSubscriber<T>  extends Subscriber<T> {
-
+public  abstract class SimpleSubscriber<T>  implements Observer<T> {
     @Override
-    public void onCompleted() {
+    public void onSubscribe(@NonNull Disposable d) {
 
     }
 
-
     @Override
-    public void onStart() {
-        super.onStart();
-    }
-    @Override
-    public void onNext(T t) {
+    public void onNext(@NonNull T t) {
         if(t != null){
             MyLog.d("result :" + t.toString());
         }
@@ -30,8 +27,7 @@ public abstract class SimpleSubscriber<T>  extends Subscriber<T> {
     }
 
     @Override
-    public void onError(Throwable e) {
-        e.printStackTrace();
+    public void onError(@NonNull Throwable e) {
         if(e instanceof HttpException){
             HttpException exception = (HttpException)e;
             String message = exception.response().message();
@@ -40,19 +36,13 @@ public abstract class SimpleSubscriber<T>  extends Subscriber<T> {
         }
         _onError(e.getMessage());
 
-//        if (NetUtils.isConnected(MyApp.getApplication())) { //这里自行替换判断网络的代码
-//            _onError("网络不可用");
-//        } else if (e instanceof ApiException) {
-//        } else {
-//            _onError("请求失败，请稍后再试...");
-//        }
     }
 
-    public void onCancelProgress() {
-        if (!this.isUnsubscribed()) {
-            this.unsubscribe();
-        }
+    @Override
+    public void onComplete() {
+
     }
+
     protected abstract void _onNext(T t);
     protected abstract void _onError(String message);
 }

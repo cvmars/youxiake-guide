@@ -26,9 +26,9 @@ public class BaseListFragment extends BaseFragment {
     @BindView(R.id.list_shareNote)
     PulltoRefreshRecyclerView listShareNote;
 
-    HomeNoteAdapter noteAdapter;
+    protected  HomeNoteAdapter noteAdapter;
 
-    List<HelloModel> models = new ArrayList<>();
+    protected List<HelloModel> models = new ArrayList<>();
 
     @Nullable
     @Override

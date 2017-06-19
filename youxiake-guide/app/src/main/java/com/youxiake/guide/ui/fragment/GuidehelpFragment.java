@@ -35,7 +35,7 @@ public class GuidehelpFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle
             savedInstanceState) {
 
-        View parentView = inflater.inflate(R.layout.frg_sharenote, null);
+        View parentView = inflater.inflate(R.layout.frg_messagecenter, null);
         return parentView;
     }
 

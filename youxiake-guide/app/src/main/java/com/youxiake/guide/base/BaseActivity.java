@@ -8,11 +8,13 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.youxiake.guide.R;
 import com.youxiake.guide.eventbus.EventBusWrap;
 import com.youxiake.guide.utils.ActivityUtils;
 import com.youxiake.guide.utils.MyLog;
@@ -28,18 +30,34 @@ public abstract class BaseActivity extends AppCompatActivity {
     public final String TAG = this.getClass().getSimpleName();
 
 
+    protected Toolbar toolbar;
+
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
         MyLog.d(TAG + "--->>> onStart :");
         // 竖屏锁定
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         ActivityUtils.addActivity(this);
         //判断是否注册eventBus，如果子类需要注册重写 isRegisteredEventBus()方法，返回true;
         if (isRegisteredEventBus()) {
             EventBusWrap.register(this);
         }
+        if(isNeedToolBar()){
+            toolbar = (Toolbar) findViewById(R.id.toolbar_base);
+             setSupportActionBar(toolbar);
+        }
     }
+
+    /**
+     * 判断是否注册eventBus，如果子类需要注册重写 isRegisteredEventBus()方法，返回true;
+     * @return
+     */
+    public boolean isNeedToolBar(){
+        return false;
+    }
+
 
     @Override
     protected void onDestroy() {
