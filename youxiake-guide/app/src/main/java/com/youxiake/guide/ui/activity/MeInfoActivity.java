@@ -8,11 +8,9 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.luck.picture.lib.tools.DebugUtil;
 import com.youxiake.guide.R;
 import com.youxiake.guide.base.BaseActivity;
 import com.youxiake.guide.utils.ImageLoader;
-import com.youxiake.guide.utils.MyLog;
 
 import java.util.List;
 
@@ -50,7 +48,7 @@ public class MeInfoActivity extends BaseActivity {
                 .withAspectRatio(1,1)
                 .rotateEnabled(true)
                 .scaleEnabled(true)
-                .forResult(PictureConfig.CHOOSE_REQUEST);;
+                .forResult(PictureConfig.CHOOSE_REQUEST);
     }
 
 

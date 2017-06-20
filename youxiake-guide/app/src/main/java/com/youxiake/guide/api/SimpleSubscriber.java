@@ -13,6 +13,7 @@ import io.reactivex.Observer;
  */
 
 public  abstract class SimpleSubscriber<T>  implements Observer<T> {
+
     @Override
     public void onSubscribe(@NonNull Disposable d) {
 
@@ -35,7 +36,6 @@ public  abstract class SimpleSubscriber<T>  implements Observer<T> {
             MyLog.d("HttpException code :" + code +"  message:" + message);
         }
         _onError(e.getMessage());
-
     }
 
     @Override

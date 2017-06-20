@@ -15,10 +15,11 @@ import com.youxiake.guide.R;
 import com.youxiake.guide.api.Api;
 import com.youxiake.guide.api.HttpResult;
 import com.youxiake.guide.api.HttpUtil;
+import com.youxiake.guide.app.MyConfig;
 import com.youxiake.guide.api.SimpleSubscriber;
 import com.youxiake.guide.base.BaseActivity;
 import com.youxiake.guide.model.HomeModel;
-import com.youxiake.guide.ui.fragment.GuideFragment;
+import com.youxiake.guide.ui.fragment.ToolFragment;
 import com.youxiake.guide.ui.fragment.IndexHomeFragment;
 import com.youxiake.guide.ui.fragment.MeFragment;
 import com.youxiake.guide.ui.fragment.MessageCenterFragment;
@@ -62,7 +63,7 @@ public class MainActivity extends BaseActivity {
     private FragmentTransaction fragmentTransaction;
     private IndexHomeFragment homeFragment;
     private MessageCenterFragment shareNoteFragment;
-    private GuideFragment guideFragment;
+    private ToolFragment guideFragment;
     private MeFragment meFragment;
     private long mExitTime;
     public static final long TWO_SECOND = 2 * 1000;
@@ -71,7 +72,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        StatusBarUtil.setTranslucentForImageViewInFragment(this, null);
+        StatusBarUtil.setTranslucentForImageViewInFragment(this,null);
         ButterKnife.bind(this);
         initView();
         requestData();
@@ -88,7 +89,7 @@ public class MainActivity extends BaseActivity {
 
     public void requestData() {
 
-        final Observable<HttpResult<HomeModel>> homeInfo = Api.getDefault().getHomeInfo();
+        final Observable<HttpResult<HomeModel>> homeInfo = Api.getInstanceV1().getHomeInfo();
         HttpUtil.getInstance().toSubscribe(homeInfo,
                 new SimpleSubscriber<HomeModel>() {
 
@@ -97,13 +98,12 @@ public class MainActivity extends BaseActivity {
 
 
                     }
-
                     @Override
                     protected void _onError(String message) {
                         showToast("_onError :" + message);
                     }
 
-                });
+                }, MyConfig.CACHE_KEY_HOME);
 
     }
 
@@ -141,7 +141,7 @@ public class MainActivity extends BaseActivity {
                 txtHomeGuide.setTextColor(getResources().getColor(R.color.color_Base));
                 ivHomeGuide.setImageResource(R.drawable.main_icon_xuzhi_selected);
                 if (guideFragment == null) {
-                    guideFragment = new GuideFragment();
+                    guideFragment = new ToolFragment();
                     fragmentTransaction.add(R.id.home_fral_content, guideFragment);
                 } else {
                     fragmentTransaction.show(guideFragment);

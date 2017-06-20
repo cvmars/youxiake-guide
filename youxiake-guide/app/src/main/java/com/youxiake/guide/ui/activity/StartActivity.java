@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
 
+import com.jaeger.library.StatusBarUtil;
 import com.youxiake.guide.R;
 import com.youxiake.guide.base.BaseActivity;
 
@@ -23,7 +24,7 @@ public class StartActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-
+        StatusBarUtil.setTranslucent(this);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

@@ -32,9 +32,9 @@ public class HttpUtil {
     }
 
 
-    public <T> void toSubscribe(Observable<HttpResult<T>> ob, final SimpleSubscriber subscriber){
+    public <T> void toSubscribe(Observable<HttpResult<T>> ob, final SimpleSubscriber subscriber,String cacheKey){
 
-        ob.flatMap(new Function<HttpResult<T>, Observable<T>>() {
+        Observable<T> resultObservable = ob.flatMap(new Function<HttpResult<T>, Observable<T>>() {
             @Override
             public Observable<T> apply(HttpResult<T> result) throws Exception {
                 MyLog.d(result.toString());
@@ -47,11 +47,9 @@ public class HttpUtil {
         }).subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(subscriber);
-
+                .observeOn(AndroidSchedulers.mainThread());
+        RetrofitCache.load(resultObservable,cacheKey).subscribe(subscriber);
     }
-
 
     /**
      * 创建成功的数据
@@ -74,6 +72,5 @@ public class HttpUtil {
                 }
             }
         });
-
     }
 }

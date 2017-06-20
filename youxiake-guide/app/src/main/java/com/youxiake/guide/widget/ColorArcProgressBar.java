@@ -21,6 +21,7 @@ import android.view.WindowManager;
 
 import com.youxiake.guide.R;
 import com.youxiake.guide.utils.DensityUtils;
+import com.youxiake.guide.utils.MyLog;
 
 import java.text.DecimalFormat;
 

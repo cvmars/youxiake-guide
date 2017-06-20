@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/txt_guideRecord_category"
+        android:layout_width="wrap_content"
+        android:text="企业"
+        android:layout_height="wrap_content"/>
+
+
+    <TextView
+        android:id="@+id/txt_guideRecord_name"
+        android:layout_width="wrap_content"
+        android:text="[古道传奇]3-4月，重返微商之路，重返微商之路"
+        android:layout_toRightOf="@+id/txt_guideRecord_category"
+        android:layout_height="wrap_content"/>
+
+
+    <TextView
+        android:id="@+id/txt_guideRecord_time"
+        android:layout_width="match_parent"
+        android:text="2016-5-16 ~ 2016-7-18"
+        android:layout_below="@+id/txt_guideRecord_category"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content"/>
+
+
+    <LinearLayout
+        android:layout_below="@id/txt_guideRecord_time"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/txt_guideRecord_member"
+            android:layout_width="wrap_content"
+            android:text="20成人20儿童"
+            android:layout_marginTop="15dp"
+            android:layout_height="wrap_content"/>
+
+
+        <View android:layout_width="0dp"
+              android:layout_weight="1"
+              android:layout_height="1px"/>
+        <TextView
+            android:id="@+id/txt_guideRecord_state"
+            android:layout_width="wrap_content"
+            android:text="已结束"
+            android:layout_marginTop="15dp"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="8dp"
+        android:background="@color/color_default_line_ddd"
+        android:layout_height="0.5dp"/>
+</RelativeLayout>

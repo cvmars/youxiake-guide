@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer-array name="google_colors">
-        <item>@color/red</item>
-        <item>@color/blue</item>
-        <item>@color/yellow</item>
-        <item>@color/green</item>
+        <item>@color/color_Base</item>
+        <item>@color/color_Base</item>
     </integer-array>
 
     <declare-styleable name="ColorArcProgressBar">

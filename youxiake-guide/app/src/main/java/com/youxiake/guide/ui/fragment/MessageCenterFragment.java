@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 
 import com.youxiake.guide.R;
 import com.youxiake.guide.adapter.HomeNoteAdapter;
+import com.youxiake.guide.adapter.MessageCenterAdapter;
 import com.youxiake.guide.base.BaseFragment;
 import com.youxiake.guide.model.HelloModel;
 import com.youxiake.guide.utils.DensityUtils;
@@ -32,7 +33,7 @@ public class MessageCenterFragment extends BaseFragment {
     @BindView(R.id.list_shareNote)
     PulltoRefreshRecyclerView listShareNote;
 
-    HomeNoteAdapter noteAdapter;
+    MessageCenterAdapter noteAdapter;
 
     List<HelloModel> models = new ArrayList<>();
     @BindView(R.id.fake_statusbar_view)
@@ -63,7 +64,7 @@ public class MessageCenterFragment extends BaseFragment {
             layoutParams.height = ScreenUtils.getStatusHeight(getActivity());
         }
 
-        noteAdapter = new HomeNoteAdapter(R.layout.list_home_note, models);
+        noteAdapter = new MessageCenterAdapter(R.layout.list_message_item, models);
 //        addMore();
         listShareNote.setAdapter(noteAdapter);
         listShareNote.setPullRefreshListener(new PulltoRefreshRecyclerView.RecyPtrHandler() {

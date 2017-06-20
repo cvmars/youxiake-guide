@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.youxiake.guide.R;
-import com.youxiake.guide.adapter.HomeNoteAdapter;
+import com.youxiake.guide.adapter.IndexGuideRecordAdapter;
 import com.youxiake.guide.base.BaseFragment;
 import com.youxiake.guide.model.HelloModel;
 import com.youxiake.guide.widget.ColorArcProgressBar;
@@ -28,13 +28,10 @@ public class IndexHomeFragment extends BaseFragment {
 
 
     @BindView(R.id.list_home)
-    PulltoRefreshRecyclerView listShareNote;
-
-    protected HomeNoteAdapter noteAdapter;
+    PulltoRefreshRecyclerView listIndexHome;
+    protected IndexGuideRecordAdapter noteAdapter;
     protected List<HelloModel> models = new ArrayList<>();
-    @BindView(R.id.pg_home_goal)
     ColorArcProgressBar pgHomeGoal;
-    Unbinder unbinder;
 
 
     @Nullable
@@ -42,7 +39,6 @@ public class IndexHomeFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle
             savedInstanceState) {
         View parentView = inflater.inflate(R.layout.frg_index_home, null);
-        unbinder = ButterKnife.bind(this, parentView);
         return parentView;
     }
 
@@ -51,24 +47,26 @@ public class IndexHomeFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         pgHomeGoal.setCurrentValues(4.7f);
-        pgHomeGoal.animate();
     }
 
     @Override
     protected void initViewsAndEvents(View parentView) {
-        noteAdapter = new HomeNoteAdapter(R.layout.list_home_note, models);
+        noteAdapter = new IndexGuideRecordAdapter(R.layout.list_index_guide, models);
 //        addMore();
-        listShareNote.setAdapter(noteAdapter);
-        listShareNote.setPullRefreshListener(new PulltoRefreshRecyclerView.RecyPtrHandler() {
+        listIndexHome.setAdapter(noteAdapter);
+        View header = LayoutInflater.from(getContext()).inflate(R.layout.header_index, null);
+        pgHomeGoal = (ColorArcProgressBar) header.findViewById(R.id.pg_home_goal);
+        noteAdapter.addHeaderView(header);
+        listIndexHome.setPullRefreshListener(new PulltoRefreshRecyclerView.RecyPtrHandler() {
             @Override
             public void onLoadMore() {
-                listShareNote.postDelayed(new Runnable() {
+                listIndexHome.postDelayed(new Runnable() {
                     @Override
                     public void run() {
 
-                        if (!listShareNote.isLoadMoreEnd(4)) {
+                        if (!listIndexHome.isLoadMoreEnd(4)) {
                             addMore();
-                            listShareNote.loadMoreComplete();
+                            listIndexHome.loadMoreComplete();
                         }
                     }
                 }, 1800);
@@ -76,24 +74,23 @@ public class IndexHomeFragment extends BaseFragment {
 
             @Override
             public void onRefresh() {
-                listShareNote.postDelayed(new Runnable() {
+                listIndexHome.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         models.clear();
                         addMore();
-                        listShareNote.setNewData(models);
-                        listShareNote.refreshComplete();
+                        listIndexHome.setNewData(models);
+                        listIndexHome.refreshComplete();
                     }
                 }, 1800);
             }
         });
-        listShareNote.setAutoRefresh();
+        addMore();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
     }
 
 

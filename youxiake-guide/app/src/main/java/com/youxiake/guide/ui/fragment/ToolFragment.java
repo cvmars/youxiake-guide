@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.youxiake.guide.R;
 import com.youxiake.guide.adapter.HomeFragmentPagerAdapter;
 import com.youxiake.guide.base.BaseFragment;
-import com.youxiake.guide.base.BaseListFragment;
 import com.youxiake.guide.utils.ScreenUtils;
 
 import java.util.ArrayList;
@@ -32,7 +31,7 @@ import butterknife.Unbinder;
  * Created by Cvmars on 2017/6/13.
  */
 
-public class GuideFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
+public class ToolFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
 
 
     @BindView(R.id.mys_toolbar)
@@ -68,8 +67,8 @@ public class GuideFragment extends BaseFragment implements ViewPager.OnPageChang
             layoutParams.height = ScreenUtils.getStatusHeight(getActivity());
         }
         List<Fragment> fragments = new ArrayList<>();
-        fragments.add(new BaseListFragment());
-        fragments.add(new GuideTemplateFragment());
+        fragments.add(new ToolhelpFragment());
+        fragments.add(new ToolhelpFragment());
         fragmentPagerAdapter = new HomeFragmentPagerAdapter(getFragmentManager(), fragments);
         viewPagerHome.setAdapter(fragmentPagerAdapter);
         viewPagerHome.setOnPageChangeListener(this);

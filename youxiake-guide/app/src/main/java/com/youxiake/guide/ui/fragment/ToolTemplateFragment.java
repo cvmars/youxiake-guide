@@ -13,7 +13,7 @@ import com.youxiake.guide.base.BaseFragment;
  * Created by Cvmars on 2017/6/13.
  */
 
-public class GuideTemplateFragment extends BaseFragment{
+public class ToolTemplateFragment extends BaseFragment{
 
     @Nullable
     @Override

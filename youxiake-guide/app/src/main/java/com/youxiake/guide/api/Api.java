@@ -27,8 +27,19 @@ public class Api {
      */
     private static final int DEFAULT_TIMEOUT = 10000;
 
+    private static final String versionCodeV1 = "v1";
 
-    public static ApiService getDefault() {
+
+    /**
+     * v1请求
+     * @return
+     */
+    public static ApiService getInstanceV1() {
+      return getDefault(versionCodeV1);
+    }
+
+
+    public static ApiService getDefault(final String version) {
         if (SERVICE == null) {
             //手动创建一个OkHttpClient并设置超时时间
             OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
@@ -54,12 +65,11 @@ public class Api {
 
                     Request newRequest = request.newBuilder()
                             //对所有请求添加请求头
-                            .header("Accept", "application/vnd.yxk.v2+json")
+                            .header("Accept", "application/vnd.yxk."+ version +"json")
                             .method(request.method(), request.body())
 //                            .header("Cache-Control", cacheControl.toString() )
                             .url(authorizedUrlBuilder.build())
                             .build();
-
 
                     MyLog.d( "Request   url  : " + newRequest.method()  +" : " + newRequest.url() +"\n"
                             +"          body : " + newRequest.body()+"\n"
@@ -80,4 +90,5 @@ public class Api {
         }
         return SERVICE;
     }
+
 }

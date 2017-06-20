@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -30,11 +31,23 @@ public class MeFragment extends BaseFragment {
 
     @BindView(R.id.my_toolbar)
     Toolbar myToolbar;
-    @BindView(R.id.txt_me_info)
-    TextView txtMeInfo;
     @BindView(R.id.fake_statusbar_view)
     View fakeStatusbarView;
     Unbinder unbinder;
+    @BindView(R.id.txt_me_name)
+    TextView txtMeName;
+    @BindView(R.id.txt_me_occupation)
+    TextView txtMeOccupation;
+    @BindView(R.id.iv_me_avator)
+    ImageView ivMeAvator;
+    @BindView(R.id.ll_me_note)
+    LinearLayout llMeNote;
+    @BindView(R.id.ll_me_info)
+    LinearLayout llMeInfo;
+    @BindView(R.id.ll_me_updatePassword)
+    LinearLayout llMeUpdatePassword;
+    @BindView(R.id.ll_me_advice)
+    LinearLayout llMeAdvice;
 
     @Nullable
     @Override
@@ -63,19 +76,27 @@ public class MeFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick(R.id.txt_me_info)
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.txt_me_info:
-                goActivity(MeInfoActivity.class);
-                break;
-        }
-    }
 
     @OnClick(R.id.my_toolbar)
     public void onViewClicked() {
 
 
         goActivity(LoginActivity.class);
+    }
+
+    @OnClick({R.id.ll_me_note, R.id.ll_me_info, R.id.ll_me_updatePassword, R.id.ll_me_advice})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.ll_me_note:
+                break;
+            case R.id.ll_me_info:
+
+                goActivity(MeInfoActivity.class);
+                break;
+            case R.id.ll_me_updatePassword:
+                break;
+            case R.id.ll_me_advice:
+                break;
+        }
     }
 }

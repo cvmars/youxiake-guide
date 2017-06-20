@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.youxiake.guide.R;
 import com.youxiake.guide.adapter.HomeNoteAdapter;
+import com.youxiake.guide.adapter.ToolHelpAdapter;
 import com.youxiake.guide.base.BaseFragment;
 import com.youxiake.guide.model.HelloModel;
 import com.youxiake.guide.widget.pulltorefrash.PulltoRefreshRecyclerView;
@@ -21,12 +22,12 @@ import butterknife.BindView;
  * Created by Cvmars on 2017/6/13.
  */
 
-public class GuidehelpFragment extends BaseFragment {
+public class ToolhelpFragment extends BaseFragment {
 
     @BindView(R.id.list_shareNote)
     PulltoRefreshRecyclerView listShareNote;
 
-    HomeNoteAdapter noteAdapter;
+    ToolHelpAdapter noteAdapter;
 
     List<HelloModel> models = new ArrayList<>();
 
@@ -35,14 +36,14 @@ public class GuidehelpFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle
             savedInstanceState) {
 
-        View parentView = inflater.inflate(R.layout.frg_messagecenter, null);
+        View parentView = inflater.inflate(R.layout.frg_tool_help, null);
         return parentView;
     }
 
     @Override
     protected void initViewsAndEvents(View view) {
 //        listShareNote.setLayoutManager(new LinearLayoutManager(getActivity()));
-        noteAdapter = new HomeNoteAdapter(R.layout.list_home_note,models);
+        noteAdapter = new ToolHelpAdapter(models);
 //        addMore();
         listShareNote.setAdapter(noteAdapter);
         listShareNote.setPullRefreshListener(new PulltoRefreshRecyclerView.RecyPtrHandler() {
@@ -76,8 +77,11 @@ public class GuidehelpFragment extends BaseFragment {
     }
 
     private void addMore(){
-        for (int i = 0; i < 10 ; i++) {
+        for (int i = 0; i < 20 ; i++) {
             HelloModel model = new HelloModel();
+            if(i%7 ==0){
+                model.setItemType(HelloModel.IMG);
+            }
             models.add(model);
         }
 
