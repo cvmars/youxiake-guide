@@ -2,14 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
+              android:paddingLeft="20dp"
+              android:paddingRight="10dp"
+              android:background="@color/white"
               android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/ll_me_note"
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:paddingLeft="20dp"
-        android:paddingRight="10dp"
         android:background="@drawable/selector_default_ll"
         android:layout_height="wrap_content">
 
@@ -31,8 +32,6 @@
     <LinearLayout
         android:id="@+id/ll_me_info"
         android:layout_width="match_parent"
-        android:paddingLeft="20dp"
-        android:paddingRight="10dp"
         android:orientation="horizontal"
         android:background="@drawable/selector_default_ll"
         android:layout_height="wrap_content">
@@ -56,8 +55,6 @@
         android:id="@+id/ll_me_updatePassword"
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:paddingLeft="20dp"
-        android:paddingRight="10dp"
         android:background="@drawable/selector_default_ll"
         android:layout_height="wrap_content">
 
@@ -80,8 +77,6 @@
         android:id="@+id/ll_me_advice"
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:paddingLeft="20dp"
-        android:paddingRight="10dp"
         android:background="@drawable/selector_default_ll"
         android:layout_height="wrap_content">
 

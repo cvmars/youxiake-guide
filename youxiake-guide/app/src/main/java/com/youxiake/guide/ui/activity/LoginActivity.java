@@ -99,7 +99,6 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
         if (mAuthTask != null) {
             return;
         }
-
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
