@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.youxiake.guide.R;
@@ -25,12 +26,14 @@ import butterknife.ButterKnife;
  * Created by Cvmars on 2017/6/13.
  */
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener {
 
     public final String TAG = this.getClass().getSimpleName();
 
 
     protected Toolbar toolbar;
+
+    protected TextView toolbarTitle;
 
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
@@ -44,17 +47,26 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (isRegisteredEventBus()) {
             EventBusWrap.register(this);
         }
-        if(isNeedToolBar()){
-            toolbar = (Toolbar) findViewById(R.id.toolbar_base);
-             setSupportActionBar(toolbar);
+    }
+
+    public void setToolbarTitle(String title){
+        if(toolbarTitle!=null){
+            toolbarTitle.setText(title);
         }
     }
 
+
     /**
-     * 判断是否注册eventBus，如果子类需要注册重写 isRegisteredEventBus()方法，返回true;
      * @return
      */
     public boolean isNeedToolBar(){
+        return false;
+    }
+
+    /**
+     * @return
+     */
+    public boolean isNeedNaviBack(){
         return false;
     }
 
@@ -83,14 +95,31 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void setContentView(@LayoutRes int layoutResID) {
         super.setContentView(layoutResID);
         ButterKnife.bind(this);
+        initToolbar();
     }
 
     @Override
     public void setContentView(View view) {
         super.setContentView(view);
         ButterKnife.bind(this);
+        initToolbar();
     }
 
+
+    private void initToolbar(){
+
+        if(isNeedToolBar()){
+            toolbar = (Toolbar) findViewById(R.id.toolbar_base);
+            toolbarTitle = (TextView) findViewById(R.id.txt_base_title);
+            setSupportActionBar(toolbar);
+            if(isNeedNaviBack()){
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setHomeButtonEnabled(true);
+                getSupportActionBar().setDisplayShowTitleEnabled(false);
+                toolbar.setNavigationOnClickListener(this);
+            }
+        }
+    }
 
 
 
@@ -204,5 +233,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         MyLog.d(TAG + "--->>> onBackPressed :");
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        finish();
     }
 }
